@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${parameters.appName}
+  labels:
+    app: ${parameters.appName}
+
+spec:
+  replicas: ${parameters.replicas}
+  selector:
+    matchLabels:
+      app: ${parameters.appName}
+
+  template:
+    metadata:
+      labels:
+        app: ${parameters.appName}
+
+    spec:
+      containers:
+        - name: ${parameters.appName}
+          image: ${parameters.image}
+
+          resources:
+            requests:
+              cpu: ${parameters.cpuRequest}
+              memory: ${parameters.memoryRequest}
+            limits:
+              cpu: ${parameters.cpuLimit}
+              memory: ${parameters.memoryLimit}
+
+          ports:
+            - containerPort: 80
