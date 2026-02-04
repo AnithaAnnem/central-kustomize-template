@@ -1,33 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ${variables.appName}
+spec:
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: ${variables.appName}
+  type: ClusterIP
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ${parameters.appName}
+  name: ${variables.appName}
   labels:
-    app: ${parameters.appName}
-
+    app: ${variables.appName}
 spec:
-  replicas: ${parameters.replicas}
+  replicas: ${variables.replicas}
   selector:
     matchLabels:
-      app: ${parameters.appName}
-
+      app: ${variables.appName}
   template:
     metadata:
       labels:
-        app: ${parameters.appName}
-
+        app: ${variables.appName}
     spec:
       containers:
-        - name: ${parameters.appName}
-          image: ${parameters.image}
-
-          resources:
-            requests:
-              cpu: ${parameters.cpuRequest}
-              memory: ${parameters.memoryRequest}
-            limits:
-              cpu: ${parameters.cpuLimit}
-              memory: ${parameters.memoryLimit}
-
-          ports:
-            - containerPort: 80
+      - name: ${variables.appName}
+        image: ${variables.image}
+        resources:
+          requests:
+            cpu: ${variables.cpuRequest}
+            memory: ${variables.memoryRequest}
+          limits:
+            cpu: ${variables.cpuLimit}
+            memory: ${variables.memoryLimit}
